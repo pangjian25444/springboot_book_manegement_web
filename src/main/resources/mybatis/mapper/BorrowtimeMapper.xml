@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snowy.bookstore.dao.BorrowtimeMapper">
+    <resultMap id="BaseResultMap" type="com.snowy.bookstore.bean.Borrowtime">
+        <id column="btid" jdbcType="INTEGER" property="btid" />
+        <result column="bid" jdbcType="INTEGER" property="bid" />
+        <result column="number" jdbcType="INTEGER" property="number" />
+    </resultMap>
+    <!--增加借阅次数-->
+    <update id="saveBorrowTime">
+        update borrowtime set number=number+1 where bid =#{bid}
+    </update>
+</mapper>

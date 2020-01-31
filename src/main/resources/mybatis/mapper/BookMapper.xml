@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snowy.bookstore.dao.BookinfoMapper">
+    <resultMap id="WithTimeBaseResultMap" type="com.snowy.bookstore.bean.Bookinfo">
+        <id column="bid" jdbcType="INTEGER" property="bid" />
+        <result column="bookname" jdbcType="VARCHAR" property="bookname" />
+        <result column="booktype" jdbcType="VARCHAR" property="booktype" />
+        <result column="author" jdbcType="VARCHAR" property="author" />
+        <result column="translate" jdbcType="VARCHAR" property="translate" />
+        <result column="price" jdbcType="VARCHAR" property="price" />
+        <result column="page" jdbcType="VARCHAR" property="page" />
+        <result column="publish" jdbcType="VARCHAR" property="publish" />
+        <result column="barcode" jdbcType="VARCHAR" property="barcode" />
+        <association property="borrowtime" javaType="com.snowy.bookstore.bean.Borrowtime">
+            <result column="number" jdbcType="INTEGER" property="number" />
+        </association>
+    </resultMap>
+
+    <!--  查询所有书籍信息带次数  -->
+    <select id="getBookinfoByAllWithTime" resultMap="WithTimeBaseResultMap">
+        SELECT b.bid,b.bookname,b.booktype,b.author,b.price,b.publish,b.barcode,t.number
+        FROM bookinfo b
+        LEFT JOIN borrowtime t on b.bid=t.bid
+        ORDER BY t.number DESC LIMIT 5
+    </select>
+    <!--  查询所有书籍信息  -->
+    <select id="getBookinfoByAll" resultMap="WithTimeBaseResultMap">
+        SELECT bid,bookname,booktype,author,publish,barcode FROM bookinfo
+    </select>
+    <!--查询书籍带条形码或者书名-->
+    <select id="getBookinfoByOne" resultMap="WithTimeBaseResultMap">
+        SELECT bid,bookname,booktype,publish,price FROM bookinfo
+        <where>
+            <if test="bookname!=null and bookname!=''">
+                bookname=#{bookname}
+            </if>
+            <if test="barcode!=null and barcode!=''">
+                barcode=#{barcode}
+            </if>
+        </where>
+    </select>
+</mapper>

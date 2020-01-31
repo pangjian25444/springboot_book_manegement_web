@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snowy.bookstore.dao.ReaderMapper">
+
+    <resultMap id="WithTypeBaseResultMap" type="com.snowy.bookstore.bean.Reader">
+        <id column="rid" jdbcType="INTEGER" property="rid" />
+        <result column="typeid" jdbcType="INTEGER" property="typeid" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="sex" jdbcType="INTEGER" property="sex" />
+        <result column="barcode" jdbcType="VARCHAR" property="barcode" />
+        <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+        <result column="papertype" jdbcType="VARCHAR" property="papertype" />
+        <result column="paperno" jdbcType="VARCHAR" property="paperno" />
+        <association property="readtype" javaType="com.snowy.bookstore.bean.Readtype">
+            <result column="typename" jdbcType="VARCHAR" property="typename" />
+            <result column="number" jdbcType="INTEGER" property="number" />
+        </association>
+    </resultMap>
+
+    <!--  查询所有读者信息  -->
+    <select id="getReaderByAll" resultMap="WithTypeBaseResultMap">
+        select r.rid,r.name,r.sex,r.barcode,r.papertype,r.paperno,t.typename
+        from reader r
+        LEFT JOIN readtype t
+        on r.typeid=t.typeid;
+    </select>
+    <!--  查询单个读者信息  -->
+    <select id="getReaderByid" resultMap="WithTypeBaseResultMap">
+        select r.rid,r.name,r.sex,r.barcode,r.papertype,r.paperno,r.birthday,r.typeid,t.typename
+        from reader r
+        LEFT JOIN readtype t
+        ON r.typeid=t.typeid
+        where r.rid=#{id};
+    </select>
+
+    <!--  用barcode查询单个读者信息  -->
+    <select id="getReaderOneByBarcode" resultMap="WithTypeBaseResultMap">
+        SELECT r.rid,r.name,r.sex,r.papertype,r.paperno,r.typeid,t.typename,t.number
+        FROM reader r
+        LEFT JOIN readtype t
+        on r.typeid=t.typeid
+        WHERE r.barcode=#{barcode};
+    </select>
+
+    <!--修改读者个人信息-->
+    <update id="updateRerderByid">
+        update reader
+        <set>
+            name=#{name},sex=#{sex},barcode=#{barcode},typeid=#{typeid},birthday=#{birthday},papertype=#{papertype},paperno=#{paperno}
+        </set>
+        <where>
+            rid=#{rid}
+        </where>
+    </update>
+
+    <!--查询读者是什么类型-->
+    <select id="getReaderTypeByid" resultMap="WithTypeBaseResultMap">
+        select typeid from reader where rid=#{id}
+    </select>
+</mapper>

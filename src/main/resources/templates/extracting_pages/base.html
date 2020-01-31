@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <nav class="navbar-default" role="navigation" th:fragment="head">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/mains">飞卢书城</a>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/readerall">读者档案管理</a></li>
+                    <li><a href="/bookarchive">图书类型管理</a></li>
+                    <li><a href="/booklending">图书借阅</a></li>
+                    <li><a href="/bookrenewal">图书续借</a></li>
+                    <li><a href="/returnofbooks">图书归还</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            [[${session.user}]]<b class="caret" ></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">修改个人信息</a></li>
+                            <li><a href="#">退出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>主页面</title>
+</head>
+        <link rel="stylesheet" href="/js_css/css/bootstrap.min.css"/>
+<body>
+    <!--导航栏-->
+    <div th:replace="extracting_pages/base :: head"></div>
+    <!--图书信息展示-->
+    <div>
+        <table class="table  table-hover table-striped">
+            <caption><h2>图书借阅排行榜</h2></caption>
+            <thead>
+                <tr>
+                    <th>排名</th>
+                    <th>图书条形码</th>
+                    <th>图书名称</th>
+                    <th>图书类型</th>
+                    <th>出版社</th>
+                    <th>作者</th>
+                    <th>价格</th>
+                    <th>借阅次数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="book,bookStat : ${bookall}">
+                    <td th:text="${bookStat.count }"></td>
+                    <td th:text="${book.barcode}"></td>
+                    <td th:text="${book.bookname}"></td>
+                    <td th:text="${book.booktype}"></td>
+                    <td th:text="${book.publish}"></td>
+                    <td th:text="${book.author}"></td>
+                    <td th:text="${book.price}"></td>
+                    <td th:text="${book.borrowtime.number}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+<script src="https:/code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="/js_css/js/bootstrap.min.js"></script>

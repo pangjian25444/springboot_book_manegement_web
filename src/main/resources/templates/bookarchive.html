@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>图书档案管理</title>
+
+</head>
+    <link rel="stylesheet" href="/js_css/css/bootstrap.min.css"/>
+    <script src="https:/code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="/js_css/js/bootstrap.min.js"></script>
+<body>
+    <!--导航栏-->
+    <div th:replace="extracting_pages/base :: head"></div>
+    <!--图书信息展示-->
+    <div>
+        <table class="table table-hover table-striped bookinfo_table">
+            <caption><h2>图书档案管理</h2></caption>
+            <thead>
+                <tr>
+                    <th>图书条形码</th>
+                    <th>图书名称</th>
+                    <th>图书作者</th>
+                    <th>图书类型</th>
+                    <th>出版社</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <!--显示分页信息-->
+        <div class="row">
+            <div class="col-md-6" id="page_emp_one">
+            </div>
+            <!--分页条信-->
+            <div class="col-md-6" id="page_emp_yew">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="/js_css/js/bookarchive.js"></script>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snowy.bookstore.dao.BorrowMapper">
+    <resultMap id="BaseResultMap" type="com.snowy.bookstore.bean.Borrow">
+        <id column="bwid" jdbcType="INTEGER" property="bwid" />
+        <result column="rid" jdbcType="INTEGER" property="rid" />
+        <result column="bid" jdbcType="INTEGER" property="bid" />
+        <result column="borrowtime" jdbcType="VARCHAR" property="borrowtime" />
+        <result column="repaytime" jdbcType="VARCHAR" property="repaytime" />
+        <result column="ifbook" jdbcType="INTEGER" property="ifbook" />
+    </resultMap>
+
+    <resultMap id="WithBookinfoBaseResultMap" type="com.snowy.bookstore.bean.Borrow">
+        <id column="bwid" jdbcType="INTEGER" property="bwid" />
+        <result column="rid" jdbcType="INTEGER" property="rid" />
+        <result column="bid" jdbcType="INTEGER" property="bid" />
+        <result column="borrowtime" jdbcType="VARCHAR" property="borrowtime" />
+        <result column="repaytime" jdbcType="VARCHAR" property="repaytime" />
+        <result column="ifbook" jdbcType="INTEGER" property="ifbook" />
+        <association property="bookinfo" javaType="com.snowy.bookstore.bean.Bookinfo">
+            <result column="bookname" jdbcType="VARCHAR" property="bookname" />
+            <result column="booktype" jdbcType="VARCHAR" property="booktype" />
+            <result column="price" jdbcType="VARCHAR" property="price" />
+            <result column="publish" jdbcType="VARCHAR" property="publish" />
+        </association>
+    </resultMap>
+    <!--  查询读者的书是否归还  -->
+    <select id="getBorrow" resultMap="BaseResultMap">
+        select * from borrow where rid=#{id} and ifbook=2
+    </select>
+
+    <!--查询是否是同一本书-->
+    <select id="getBorrowByRidAndBid" resultMap="BaseResultMap">
+        SELECT rid,bid FROM  borrow where rid=#{rid} and bid=#{bid} and ifbook =1
+    </select>
+    <!--读者借书-->
+    <insert id="saveBorrow">
+        insert into borrow VALUES(null,#{rid},#{bid},#{borrowtime},#{repaytime},1)
+    </insert>
+
+    <!--查询读者的借阅的书籍-->
+    <select id="getReadtypeBookQuantity" resultMap="BaseResultMap">
+        SELECT bwid FROM borrow where rid = #{rid} and ifbook= 1
+    </select>
+
+    <!--查询读者的已经借阅的书籍-->
+    <select id="getBorrowBookinfoByRid" resultMap="WithBookinfoBaseResultMap">
+        SELECT b.bid,b.borrowtime,b.repaytime,b.ifbook,k.bookname,k.booktype,k.publish,k.price
+        FROM borrow b
+        INNER JOIN bookinfo k
+        on b.bid = k.bid
+        and b.rid =#{rid}
+        and b.ifbook=1
+    </select>
+
+    <!--读者续借-->
+    <update id="updateborrow">
+        update borrow
+        set borrowtime = #{borrowtime},repaytime = #{repaytime}
+        where rid = #{rid} and bid = #{bid} and ifbook =1
+    </update>
+    <!--读者归还-->
+    <update id="updateBorrowByIfbook">
+        update borrow
+        set ifbook =2
+        where rid = #{rid} and bid = #{bid} and borrowtime = #{borrowtime} and repaytime = #{repaytime}
+    </update>
+</mapper>

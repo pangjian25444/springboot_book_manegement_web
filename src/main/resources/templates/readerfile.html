@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>读者档案管理</title>
+</head>
+<link rel="stylesheet" href="static/js_css/css/bootstrap.min.css"/>
+<script src="https:/code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="/js_css/js/bootstrap.min.js"></script>
+
+<body>
+    <div th:replace="extracting_pages/base :: head"></div>
+    <!--数据展示-->
+    <div>
+        <table class="table table-hover table-striped">
+            <caption><h2>读者档案管理</h2></caption>
+            <thead>
+                <tr>
+                    <th>条形码</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>读者类型</th>
+                    <th>证件类型</th>
+                    <th>证件号码</th>
+                    <th>修改</th>
+                    <th>删除</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="allreader : ${reader}">
+                    <td th:text="${allreader.barcode}"></td>
+                    <td th:text="${allreader.name}"></td>
+                    <td th:text="${allreader.sex}==1?'男':'女'"></td>
+                    <td th:text="${allreader.readtype.typename}"></td>
+                    <td th:text="${allreader.papertype}"></td>
+                    <td th:text="${allreader.barcode}"></td>
+                    <td>
+                        <button class="btn btn-primary btn-xs btn_update" edit-id="#" th:edit-id="${allreader.rid}">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 修改
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger btn-xs btn_delete" edit-id="#" th:edit-id="${allreader.rid}">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true" ></span> 删除
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--模态框-->
+    <div class="modal fade readerUpdateModel" tabindex="-1" role="dialog" id="readerUpdateModel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">读者信息修改</h4>
+                </div>
+                <div class="modal-body update_reader">
+                    <form class="form-horizontal">
+                        <input type="hidden" name="rid" id="reader_update_rid">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">姓名</label>
+                            <div class="col-sm-10">
+                                <input type="email" name="name" id="reader_update_name" class="form-control" placeholder="姓名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">性别</label>
+                            <div class="col-sm-10">
+                                <label class="radio-inline">
+                                    <input type="radio" name="sex" id="reader_update_sex1" value="1" > 男
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="sex" id="reader_update_sex2" value="2"> 女
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">条形码</label>
+                            <div class="col-sm-10">
+                                <input type="email" name="barcode" id="reader_update_barcode" class="form-control"  placeholder="条形码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">读者类型</label>
+                            <div class="col-sm-10">
+                                <select class="form-control reader_update_type" name="typeid">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">出生日期</label>
+                            <div class="col-sm-10">
+                                <input type="email" name="birthday" id="reader_update_birthday" class="form-control"  placeholder="出生日期">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">有效证件</label>
+                            <div class="col-sm-10">
+                                <select class="form-control reader_update_papertype" name="papertype">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">证件号码</label>
+                            <div class="col-sm-10">
+                                <input type="email" name="paperno" id="reader_update_paperno" class="form-control"  placeholder="证件号码">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary btn_update_reader">更新</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</body>
+</html>
+<script src="/js_css/js/readerfile.js"></script>

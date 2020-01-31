@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>图书借阅</title>
+</head>
+    <link rel="stylesheet" href="static/js_css/css/bootstrap.min.css"/>
+    <script src="https:/code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="/js_css/js/bootstrap.min.js"></script>
+<body>
+    <!--导航栏-->
+    <div th:replace="extracting_pages/base :: head"></div>
+    <!--读者搜索框-->
+    <div id="reader_search_box">
+        <div class="form-inline">
+            <table class="table">
+                <caption><h2>图书借阅</h2></caption>
+                <tbody>
+                    <tr>
+                        <td width="550px"><h5><b>读者验证</b></h5></td>
+                        <td>
+                            <b>读者条形码:</b>
+                            <input type="text" name="barcode" placeholder="请输入读者条形码" class="form-control">
+                            <button class="btn btn-primary btn-sm btn_query_reader">确认</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--读者信息展示框-->
+    <div style="margin-top: -15px">
+        <table class="table select-table table-striped show_reader">
+            <tbody style="text-align:right;">
+                <tr>
+                    <td>姓名：</td>
+                    <td><input id="name"  class="form-control" type="text"  required disabled="disabled"></td>
+                    <td>性别：</td>
+                    <td><input id="sex" class="form-control" type="text"  required disabled="disabled"></td>
+                    <td>读者类型：</td>
+                    <td><input id="readtype"  class="form-control" type="text"  disabled="disabled"></td>
+                </tr>
+                <tr>
+                    <td>证件类型：</td>
+                    <td><input id="papertype" class="form-control" type="text"  disabled="disabled"></td>
+                    <td>证件号码：</td>
+                    <td><input id="paperno" class="form-control" type="text"  disabled="disabled"></td>
+                    <td>可借数量：</td>
+                    <td>
+                        <div class="input-group">
+                            <input id="number" class="form-control" type="text"  disabled="disabled">
+                            <span class="input-group-addon">册</span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--书籍搜索框-->
+    <div id="booksearchbox">
+        <div class="form-inline">
+            <table class="table" >
+                <tbody>
+                <tr>
+                    <td><h5><b>添加依据</b></h5></td>
+                    <td align="right" width="350px">
+                        <div  class="col-sm-10" style="padding-top: 5px;">
+                            <label class="radio-inline">
+                                <input type="radio" name="status"  value="1" checked="checked"> 图书条形码
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="status"  value="2"> 图书名称
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="text" name="wordsandnumbers"  placeholder="请输入图书条形码" class="form-control">
+                        <button class="btn btn-primary btn-sm btn_query_bookinfo" >确认</button>
+                        <button class="btn btn btn-info btn-sm btn_lend_booinfo">完成借阅</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--要借阅的书籍信息-->
+    <div id="bookinfo">
+        <form>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>图书名称</th>
+                        <th>借阅时间</th>
+                        <th>应还时间</th>
+                        <th>出版社</th>
+                        <th>图书类型</th>
+                        <th>价格(元)</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
+<script src="/js_css/js/booklending.js"></script>
